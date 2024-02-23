@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<definitions name="TreasureService"
+    targetNamespace="http://mds-api-ex1.test/"
+    xmlns:tns="http://mds-api-ex1.test/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+    <types>
+        <xsd:schema targetNamespace="http://mds-api-ex1.test/">
+            <xsd:element name="trouverTresorRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="nomPirate" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="trouverTresorResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="latitude" type="xsd:string" />
+                        <xsd:element name="longitude" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+
+    <message name="trouverTresorRequest">
+        <part name="parameters" element="tns:trouverTresorRequest" />
+    </message>
+
+    <message name="trouverTresorResponse">
+        <part name="parameters" element="tns:trouverTresorResponse" />
+    </message>
+
+    <portType name="TreasurePortType">
+        <operation name="trouverTresor">
+            <input message="tns:trouverTresorRequest" />
+            <output message="tns:trouverTresorResponse" />
+        </operation>
+    </portType>
+
+    <binding name="TreasureBinding" type="tns:TreasurePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="trouverTresor">
+            <soap:operation soapAction="http://mds-api-ex1.test/trouverTresor" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+        </operation>
+    </binding>
+
+    <service name="TreasureService">
+        <port name="TreasurePort" binding="tns:TreasureBinding">
+            <soap:address location="http://mds-api-ex1.test/treasureService.php" />
+        </port>
+    </service>
+
+</definitions>
